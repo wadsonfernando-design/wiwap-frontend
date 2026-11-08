@@ -23,7 +23,7 @@ import {
    exclusivamente por aqui — nenhuma tela guarda dados "de verdade" sozinha.
 ============================================================================ */
 
-const API_BASE_URL = "https://wiwap-representantes-api-pilot.netlify.app/api";
+const API_BASE_URL = "/api";
 
 async function apiFetch(path, { method = "GET", body, token } = {}) {
   const res = await fetch(`${API_BASE_URL}${path}`, {
