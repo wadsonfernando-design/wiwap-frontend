@@ -1,3 +1,4 @@
+import DashboardComercial from "./DashboardComercial";
 import React, { useState, useMemo, useCallback, useEffect } from "react";
 import Papa from "papaparse";
 import {
@@ -23,7 +24,7 @@ import {
    exclusivamente por aqui — nenhuma tela guarda dados "de verdade" sozinha.
 ============================================================================ */
 
-const API_BASE_URL = "/api";
+const API_BASE_URL = import.meta.env.VITE_DASHBOARD_PREVIEW_API || "/api";
 
 async function apiFetch(path, { method = "GET", body, token } = {}) {
   const res = await fetch(`${API_BASE_URL}${path}`, {
@@ -607,6 +608,7 @@ function LoginScreen({ onLogin }) {
 ============================================================================ */
 
 const MENU = [
+  { key: "dashboard_comercial", label: "Dashboard comercial", icon: LayoutGrid, perfis: "all" },
   { key: "visao_geral", label: "Visão geral", icon: LayoutGrid, perfis: "all" },
   { key: "representantes", label: "Representantes", icon: Users, perfis: ["administrador", "diretoria", "gestor", "financeiro"] },
   { key: "carteira", label: "Carteira de lojas", icon: Store, perfis: ["administrador", "diretoria", "gestor", "financeiro"] },
@@ -3917,6 +3919,7 @@ function EmConstrucaoView({ titulo }) {
 ============================================================================ */
 
 const TITLES = {
+  dashboard_comercial: ["Dashboard comercial", "Funil de crédito, setup e inadimplência"],
   visao_geral: ["Visão geral", "Indicadores consolidados da operação comercial"],
   representantes: ["Representantes", "Cadastro, dados financeiros e documentação"],
   carteira: ["Carteira de lojas", "Vínculos, transferências e histórico por representante"],
@@ -3992,7 +3995,10 @@ export default function App() {
     return () => { ativo = false; };
   }, [user?.token]);
 
-  const handleLogin = (u) => setUser(u);
+  const handleLogin = (u) => {
+    setCurrent(u.perfil === "representante" ? "dashboard_comercial" : "visao_geral");
+    setUser(u);
+  };
 
   const handleTransferir = useCallback(async (loja, { novoRepId, dataEfetiva, motivo }) => {
     const repAntigo = representantes.find((r) => r.id === loja.representanteAtualId);
@@ -4055,7 +4061,7 @@ export default function App() {
   const repsVisiveis = user.perfil === "representante" ? representantes.filter((r) => r.id === user.representanteId) : representantes;
   const vendasVisiveis = user.perfil === "representante" ? vendas.filter((v) => v.representanteId === user.representanteId) : vendas;
 
-  const rotasConhecidas = ["visao_geral", "representantes", "carteira", "condicoes", "simulador", "vendas", "fechamentos", "metas", "comissoes", "aprovacoes", "pagamentos", "relatorios", "configuracoes", "auditoria"];
+  const rotasConhecidas = ["dashboard_comercial", "visao_geral", "representantes", "carteira", "condicoes", "simulador", "vendas", "fechamentos", "metas", "comissoes", "aprovacoes", "pagamentos", "relatorios", "configuracoes", "auditoria"];
 
   return (
     <div style={{ background: COLORS.bg }} className="min-h-screen w-full flex font-sans" >
@@ -4073,6 +4079,7 @@ export default function App() {
           onAbrirLoja={handleAbrirLojaNaBusca}
         />
         <main className="p-6 flex-1 min-w-0">
+          {current === "dashboard_comercial" && <DashboardComercial apiBase={API_BASE_URL} token={user.token} usuario={user} />}
           {current === "visao_geral" && <VisaoGeralView representantes={repsVisiveis} lojas={lojasVisiveis} user={user} />}
           {current === "representantes" && user.perfil !== "representante" && (
             <RepresentantesView representantes={representantes} lojas={lojas} onSelect={setSelecionado} onCriar={handleCriarRepresentante} parametros={parametros} />
@@ -4120,3 +4127,4 @@ export default function App() {
     </div>
   );
 }
+
