@@ -23,7 +23,7 @@ import {
    exclusivamente por aqui — nenhuma tela guarda dados "de verdade" sozinha.
 ============================================================================ */
 
-const API_BASE_URL = "https://wiwap-backend-production.up.railway.app/api";
+const API_BASE_URL = "https://wiwap-representantes-api-pilot.netlify.app/api";
 
 async function apiFetch(path, { method = "GET", body, token } = {}) {
   const res = await fetch(`${API_BASE_URL}${path}`, {
@@ -596,13 +596,6 @@ function LoginScreen({ onLogin }) {
               {entrando ? "Entrando..." : "Entrar"}
             </button>
           </form>
-          <div style={{ borderColor: COLORS.border, background: "#FAFAFD" }} className="border rounded-lg p-3 mt-6 text-[12px]" >
-            <div style={{ color: COLORS.text }} className="font-medium mb-1">Usuários de teste (do seed)</div>
-            <div style={{ color: COLORS.muted }} className="leading-relaxed">
-              admin@wiwap.com · diretoria@wiwap.com · gestor@wiwap.com · financeiro@wiwap.com · representante@wiwap.com<br />
-              Senha para todos: <strong>senha123</strong>
-            </div>
-          </div>
         </div>
       </div>
     </div>
