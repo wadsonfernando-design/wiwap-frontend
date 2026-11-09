@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Primeiro acesso | Wiwap Homologação</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:24px;background:#f4f5f7;color:#1f2733;font:16px/1.5 Arial,sans-serif}
+main{max-width:540px;margin:5vh auto;padding:24px;background:white;border:1px solid #dadada;border-radius:16px}
+h1{color:#003060;font-size:26px;margin:0}
+label,input,button{display:block;width:100%}
+label{margin-top:16px;font-weight:bold}
+input,button{font:inherit;border:1px solid #8a919c;border-radius:8px;padding:10px}
+button{background:#003060;color:white;margin-top:20px;cursor:pointer}
+button:disabled{opacity:.6}
+:focus-visible{outline:2px solid #003060;outline-offset:2px}
+</style>
+<main>
+<h1>Defina sua senha de homologação</h1>
+<p>Wadson Oliveira<br>wadson@wiwap.com.br</p>
+<p>Use o token SETUP_TOKEN do projeto wiwap-dashboard-homologacao no Netlify. Escolha uma senha exclusiva para o ambiente de teste.</p>
+<form id="setup">
+<label for="token">Token de configuração</label>
+<input id="token" type="password" autocomplete="off" minlength="24" required>
+<label for="senha">Nova senha de teste</label>
+<input id="senha" type="password" autocomplete="new-password" minlength="10" required>
+<button type="submit">Criar acesso de homologação</button>
+</form>
+<p id="resultado" role="status"></p>
+</main>
+<script>
+const form = document.querySelector('#setup');
+const token = document.querySelector('#token');
+const senha = document.querySelector('#senha');
+const resultado = document.querySelector('#resultado');
+const button = form.querySelector('button');
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  if (new TextEncoder().encode(senha.value).length > 72) {
+    resultado.textContent = 'Use uma senha de até 72 bytes.';
+    return;
+  }
+  button.disabled = true;
+  resultado.textContent = 'Criando acesso…';
+  try {
+    const response = await fetch('/api/auth/primeiro-acesso', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: token.value.trim(), nome: 'Wadson Oliveira', email: 'wadson@wiwap.com.br', senha: senha.value }),
+    });
+    if (response.status === 201) {
+      form.reset();
+      form.hidden = true;
+      resultado.textContent = 'Acesso criado com sucesso (HTTP 201). Avise no ChatGPT para concluir a configuração.';
+      return;
+    }
+    const data = await response.json().catch(() => ({}));
+    resultado.textContent = 'HTTP ' + response.status + (typeof data.erro === 'string' ? ' — ' + data.erro : '');
+  } catch {
+    resultado.textContent = 'Falha de conexão ao criar o acesso. Tente novamente.';
+  } finally {
+    senha.value = '';
+    button.disabled = false;
+  }
+});
+</script>
+</html>
