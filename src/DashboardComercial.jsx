@@ -2,7 +2,7 @@
 // Uso no App: <DashboardComercial apiBase={API_BASE_URL} token={token} usuario={usuario} />
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
-const C = { ink: "#0C1222", text: "#111528", muted: "#6B7185", faint: "#9AA0B1", border: "#E3E5EC", bg: "#FAFAFB", surface: "#FFFFFF", primary: "#4B4FE0", navy: "#12284C", teal: "#3A9C9E", green: "#2E9E57", rose: "#C4275D", amber: "#B8720A", roseBg: "#FBE7EE", greenBg: "#E7F6EF", grayBg: "#EEF0F4" };
+const C = { ink: "#141D2E", text: "#1F2733", muted: "#5B6472", faint: "#69707D", border: "#DADADA", bg: "#FCFCFC", surface: "#FFFFFF", primary: "#003060", navy: "#003060", teal: "#009FA1", green: "#15803D", rose: "#B91C1C", amber: "#B45309", roseBg: "#FDECEC", greenBg: "#E9F7EF", grayBg: "#F4F5F7" };
 const brl = (v) => (v == null ? "—" : v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }));
 const pct = (v, d = 1) => (v == null ? "—" : `${(v * 100).toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d })}%`);
 const num = (v) => (v == null ? "—" : v.toLocaleString("pt-BR"));
@@ -85,7 +85,7 @@ function Performance({ titulo, d, meta, podeDefinir, onDefinir }) {
           <div>{brl(d.realizado)} de {meta == null ? "—" : brl(meta)}</div>
         </div>
       </div>
-      <div style={{ height: 14, background: "#E0E2E8", borderRadius: 999, margin: "14px 0 8px", overflow: "hidden" }} role="progressbar" aria-valuenow={Math.round((pctMeta || 0) * 100)} aria-valuemin="0" aria-valuemax="100">
+      <div style={{ height: 14, background: "#ECEEF1", borderRadius: 999, margin: "14px 0 8px", overflow: "hidden" }} role="progressbar" aria-valuenow={Math.round((pctMeta || 0) * 100)} aria-valuemin="0" aria-valuemax="100">
         <div style={{ width: `${Math.min(100, (pctMeta || 0) * 100)}%`, height: "100%", background: C.primary }} />
       </div>
       <div style={{ fontSize: 13, color: C.muted, display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
@@ -103,7 +103,7 @@ function Performance({ titulo, d, meta, podeDefinir, onDefinir }) {
 function Modal({ titulo, onClose, children, largo }) {
   useEffect(() => { const f = (e) => e.key === "Escape" && onClose(); window.addEventListener("keydown", f); return () => window.removeEventListener("keydown", f); }, [onClose]);
   return (
-    <div role="dialog" aria-modal="true" aria-label={titulo} onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(12,18,34,.45)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16, zIndex: 50 }}>
+    <div role="dialog" aria-modal="true" aria-label={titulo} onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(20,29,46,.45)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16, zIndex: 50 }}>
       <div onClick={(e) => e.stopPropagation()} style={{ background: C.surface, borderRadius: 16, padding: 22, width: "100%", maxWidth: largo ? 860 : 560, maxHeight: "88vh", overflow: "auto" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}><h3 style={{ margin: 0, color: C.text }}>{titulo}</h3><Botao leve onClick={onClose}>Fechar</Botao></div>
         {children}
@@ -198,7 +198,7 @@ function Funil({ f, ant }) {
         <div key={e.rot} style={{ marginBottom: 10 }}>
           {e.conv && <div style={{ fontSize: 12, color: C.muted, margin: "2px 0 4px 8px" }}>↳ conversão {pct(e.conv.valor)} <span style={{ color: C.faint }}>({e.conv.numerador} de {e.conv.denominador})</span></div>}
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14 }}><span>{e.rot}</span><b>{e.fmt(e.v)}</b></div>
-          {i < 3 && <div style={{ height: 10, background: "#E8EAF0", borderRadius: 999 }}><div style={{ height: "100%", width: `${(e.v / max) * 100}%`, background: C.primary, borderRadius: 999 }} /></div>}
+          {i < 3 && <div style={{ height: 10, background: "#ECEEF1", borderRadius: 999 }}><div style={{ height: "100%", width: `${(e.v / max) * 100}%`, background: C.primary, borderRadius: 999 }} /></div>}
         </div>
       ))}
       <div style={{ fontSize: 13, color: C.muted, borderTop: `1px solid ${C.border}`, paddingTop: 10 }}>
@@ -231,7 +231,7 @@ export default function DashboardComercial({ apiBase, token, usuario }) {
   const nomeLoja = (id) => (d?.lojasFiltro.find((l) => l.id === id)?.nome) || id;
 
   const select = { padding: "9px 12px", border: `1px solid ${C.border}`, borderRadius: 10, background: C.surface, fontSize: 14, color: C.text, minWidth: 150 };
-  const metaChip = (m) => (m == null ? <Chip>Sem meta cadastrada</Chip> : <Chip bg="#EAEAFB" fg={C.primary}>Meta {m <= 1 && m > 0 ? pct(m, 1) : brl(m)}</Chip>);
+  const metaChip = (m) => (m == null ? <Chip>Sem meta cadastrada</Chip> : <Chip bg="#E7EEFB" fg={C.primary}>Meta {m <= 1 && m > 0 ? pct(m, 1) : brl(m)}</Chip>);
 
   return (
     <div style={{ background: C.bg, minHeight: "100%", padding: "20px 16px 40px", maxWidth: 1280, margin: "0 auto", fontFamily: "inherit", color: C.text }}>
@@ -262,7 +262,7 @@ export default function DashboardComercial({ apiBase, token, usuario }) {
       {d && <>
         {d.lojasFiltro.length === 0 && <div style={{ marginBottom: 16 }}><Vazio>Nenhuma loja no escopo selecionado. Cadastre lojas e vincule-as a um representante para começar.</Vazio></div>}
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: 16 }}>
           <CartaoIndicador titulo="Originação" cor={C.navy} hojeRotulo="Hoje" hojeValor={sem("contratos") ? "Importação pendente" : brl(d.blocos.originacao.hoje)}
             rodape={rotuloMes(mes)} valorGrande={sem("contratos") ? "—" : brl(d.blocos.originacao.periodo)} onValor={sem("contratos") ? null : () => setModal({ t: "comp", ind: "originacaoEfetiva", titulo: "Originação efetiva" })}
             meta={metaChip(d.blocos.originacao.meta)} variacao={sem("contratos") ? null : d.blocos.originacao.variacao} serie={d.blocos.originacao.serie}>
@@ -284,13 +284,13 @@ export default function DashboardComercial({ apiBase, token, usuario }) {
           </CartaoIndicador>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: 16, marginTop: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", gap: 16, marginTop: 16 }}>
           <Performance titulo="Performance do mês — Originação" d={d.blocos.originacao.desempenho} meta={d.blocos.originacao.meta} podeDefinir={d.permissoes.editarMetas} onDefinir={() => setModal({ t: "metas" })} />
           <Performance titulo="Performance do mês — Setup" d={d.blocos.setup.desempenho} meta={d.blocos.setup.meta} podeDefinir={d.permissoes.editarMetas} onDefinir={() => setModal({ t: "metas" })} />
         </div>
         {!d.feriadosDefinidos && <div style={{ fontSize: 12, color: C.faint, marginTop: 8 }}>Dias úteis consideram só sábado e domingo; feriados ainda não foram cadastrados.</div>}
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: 16, marginTop: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", gap: 16, marginTop: 16 }}>
           <Caixa>
             <h3 style={{ marginTop: 0 }}>Funil de originação</h3>
             {sem("consultas") ? <Vazio>Consultas e recusas vêm do sistema de crédito da Wiwap. Importação pendente: nenhum dado recebido ainda.</Vazio> : <Funil f={d.funil} ant={d.funilAnterior} />}
@@ -300,7 +300,7 @@ export default function DashboardComercial({ apiBase, token, usuario }) {
             {sem("parcelas") ? <Vazio>Parcelas vêm do sistema da Wiwap. Importação pendente.</Vazio> : <>
               {d.inadimplencia.faixas.map((f) => { const max = Math.max(...d.inadimplencia.faixas.map((x) => x.valor), 1); return (
                 <div key={f.faixa} style={{ display: "grid", gridTemplateColumns: "92px 1fr 120px", gap: 10, alignItems: "center", fontSize: 14, marginBottom: 6 }}>
-                  <span>{f.faixa} dias</span><div style={{ height: 10, background: "#E8EAF0", borderRadius: 999 }}><div style={{ height: "100%", width: `${(f.valor / max) * 100}%`, background: C.rose, borderRadius: 999 }} /></div><span style={{ textAlign: "right" }}>{brl(f.valor)}</span></div>); })}
+                  <span>{f.faixa} dias</span><div style={{ height: 10, background: "#ECEEF1", borderRadius: 999 }}><div style={{ height: "100%", width: `${(f.valor / max) * 100}%`, background: C.rose, borderRadius: 999 }} /></div><span style={{ textAlign: "right" }}>{brl(f.valor)}</span></div>); })}
               <div style={{ fontSize: 13, color: C.muted, borderTop: `1px solid ${C.border}`, paddingTop: 10, marginTop: 8 }}>
                 Novas entradas em atraso no período: <b style={{ color: C.text }}>{d.inadimplencia.novasEntradasEmAtraso.quantidade}</b> ({brl(d.inadimplencia.novasEntradasEmAtraso.valor)}) · Recuperações: <b style={{ color: C.text }}>{d.inadimplencia.recuperacoes.quantidade}</b> ({brl(d.inadimplencia.recuperacoes.valor)})
               </div>

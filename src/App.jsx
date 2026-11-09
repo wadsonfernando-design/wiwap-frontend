@@ -1,5 +1,6 @@
 import DashboardComercial from "./DashboardComercial";
 import React, { useState, useMemo, useCallback, useEffect } from "react";
+import BrandLogo from "./brand/BrandLogo";
 import Papa from "papaparse";
 import {
   LayoutGrid, Users, Store, ShoppingCart, FileSliders, Calculator,
@@ -296,12 +297,12 @@ const VENDAS_INICIAIS = gerarVendas(200);
 const TIPO_CONDICAO = ["Plano padrão", "Plano individual", "Plano regional", "Plano por rede", "Plano temporário", "Campanha", "Condição excepcional"];
 
 const STATUS_CONDICAO_STYLES = {
-  rascunho: { bg: "#EEF0F4", fg: "#6B7185", label: "Rascunho" },
-  aguardando_aprovacao: { bg: "#FDF1DE", fg: "#B8720A", label: "Aguardando aprovação" },
-  aprovado: { bg: "#EAEAFB", fg: "#3733B0", label: "Aprovado" },
-  vigente: { bg: "#E7F6EF", fg: "#0F9D6B", label: "Vigente" },
-  suspenso: { bg: "#FBE7EE", fg: "#C4275D", label: "Suspenso" },
-  encerrado: { bg: "#F1F1F1", fg: "#8A8F9C", label: "Encerrado" },
+  rascunho: { bg: "#F4F5F7", fg: "#5B6472", label: "Rascunho" },
+  aguardando_aprovacao: { bg: "#FEF3C7", fg: "#B45309", label: "Aguardando aprovação" },
+  aprovado: { bg: "#E7EEFB", fg: "#00223F", label: "Aprovado" },
+  vigente: { bg: "#E9F7EF", fg: "#15803D", label: "Vigente" },
+  suspenso: { bg: "#FDECEC", fg: "#B91C1C", label: "Suspenso" },
+  encerrado: { bg: "#F4F5F7", fg: "#69707D", label: "Encerrado" },
 };
 
 // Catálogo fixo dos 21 componentes de comissão configuráveis (item 7 do escopo).
@@ -471,37 +472,37 @@ const PERFIL_LABEL = {
 ============================================================================ */
 
 const COLORS = {
-  ink: "#0C1222",
-  inkSoft: "#161F36",
-  bg: "#F4F5F8",
+  ink: "#141D2E",
+  inkSoft: "#00223F",
+  bg: "#F4F5F7",
   surface: "#FFFFFF",
-  primary: "#4B4FE0",
-  primaryDeep: "#3733B0",
-  border: "#E3E5EC",
-  text: "#111528",
-  muted: "#6B7185",
-  emerald: "#0F9D6B",
-  amber: "#B8720A",
-  rose: "#C4275D",
+  primary: "#003060",
+  primaryDeep: "#00223F",
+  border: "#DADADA",
+  text: "#1F2733",
+  muted: "#5B6472",
+  emerald: "#15803D",
+  amber: "#B45309",
+  rose: "#B91C1C",
 };
 
 const STATUS_STYLES = {
-  ativo: { bg: "#E7F6EF", fg: COLORS.emerald, label: "Ativo" },
-  ativa: { bg: "#E7F6EF", fg: COLORS.emerald, label: "Ativa" },
-  em_analise: { bg: "#FDF1DE", fg: COLORS.amber, label: "Em análise" },
-  credenciada: { bg: "#FDF1DE", fg: COLORS.amber, label: "Credenciada" },
-  em_implantacao: { bg: "#EAEAFB", fg: COLORS.primaryDeep, label: "Em implantação" },
-  prospect: { bg: "#EEF0F4", fg: COLORS.muted, label: "Prospect" },
-  suspenso: { bg: "#FBE7EE", fg: COLORS.rose, label: "Suspenso" },
-  suspensa: { bg: "#FBE7EE", fg: COLORS.rose, label: "Suspensa" },
-  inativa: { bg: "#F1F1F1", fg: "#8A8F9C", label: "Inativa" },
-  encerrado: { bg: "#F1F1F1", fg: "#8A8F9C", label: "Encerrado" },
-  encerrada: { bg: "#F1F1F1", fg: "#8A8F9C", label: "Encerrada" },
+  ativo: { bg: "#E9F7EF", fg: COLORS.emerald, label: "Ativo" },
+  ativa: { bg: "#E9F7EF", fg: COLORS.emerald, label: "Ativa" },
+  em_analise: { bg: "#FEF3C7", fg: COLORS.amber, label: "Em análise" },
+  credenciada: { bg: "#FEF3C7", fg: COLORS.amber, label: "Credenciada" },
+  em_implantacao: { bg: "#E7EEFB", fg: COLORS.primaryDeep, label: "Em implantação" },
+  prospect: { bg: "#F4F5F7", fg: COLORS.muted, label: "Prospect" },
+  suspenso: { bg: "#FDECEC", fg: COLORS.rose, label: "Suspenso" },
+  suspensa: { bg: "#FDECEC", fg: COLORS.rose, label: "Suspensa" },
+  inativa: { bg: "#F4F5F7", fg: "#69707D", label: "Inativa" },
+  encerrado: { bg: "#F4F5F7", fg: "#69707D", label: "Encerrado" },
+  encerrada: { bg: "#F4F5F7", fg: "#69707D", label: "Encerrada" },
 };
 
 function StatusBadge({ status, styles }) {
   const map = styles || STATUS_STYLES;
-  const s = map[status] || { bg: "#EEE", fg: "#555", label: status };
+  const s = map[status] || { bg: "var(--wiwap-bg-rebaixado)", fg: "var(--wiwap-texto-2)", label: status };
   return (
     <span
       style={{ background: s.bg, color: s.fg }}
@@ -545,13 +546,13 @@ function LoginScreen({ onLogin }) {
   };
 
   return (
-    <div style={{ background: COLORS.ink }} className="min-h-screen w-full flex items-center justify-center px-4">
+    <div style={{ background: COLORS.ink }} className="min-h-screen w-full flex items-center justify-center px-4 py-4">
       <div className="w-full max-w-[920px] grid md:grid-cols-[1.1fr_1fr] rounded-2xl overflow-hidden shadow-2xl">
-        <div style={{ background: `linear-gradient(155deg, ${COLORS.ink}, #1B234A)` }} className="p-10 flex flex-col justify-between text-white min-h-[420px]">
+        <div style={{ background: `linear-gradient(155deg, ${COLORS.ink}, #0A3A6B)` }} className="p-6 sm:p-10 flex flex-col justify-between text-white md:min-h-[420px]">
           <div>
-            <div className="flex items-center gap-2 mb-14">
-              <div style={{ background: COLORS.primary }} className="h-8 w-8 rounded-lg flex items-center justify-center font-bold text-sm">W</div>
-              <span className="text-[15px] font-semibold tracking-tight">Wiwap Parceiros</span>
+            <div className="flex items-center gap-2 mb-8 md:mb-14">
+              <BrandLogo variante="horizontal-negativo" altura={32} />
+              <span className="sr-only">Wiwap Parceiros</span>
             </div>
             <h1 className="text-[32px] leading-[1.15] font-semibold tracking-tight max-w-[340px]">
               Gestão comercial e comissionamento da rede de representantes
@@ -560,12 +561,12 @@ function LoginScreen({ onLogin }) {
               Condições comerciais, carteiras de lojas, simulação de comissão e fechamento mensal em um único lugar.
             </p>
           </div>
-          <div className="flex gap-6 text-[13px] text-white/50">
+          <div className="flex flex-wrap gap-3 md:gap-6 mt-6 text-[13px] text-white/70">
             <span>Dados reais, persistidos</span>
             <span>PostgreSQL</span>
           </div>
         </div>
-        <div style={{ background: COLORS.surface }} className="p-10 flex flex-col justify-center">
+        <div style={{ background: COLORS.surface }} className="p-6 sm:p-10 flex flex-col justify-center">
           <h2 style={{ color: COLORS.text }} className="text-[19px] font-semibold mb-1">Entrar</h2>
           <p style={{ color: COLORS.muted }} className="text-[13.5px] mb-6">Use seu e-mail e senha cadastrados na plataforma.</p>
           <form onSubmit={entrar} className="flex flex-col gap-3.5">
@@ -587,11 +588,11 @@ function LoginScreen({ onLogin }) {
               />
             </div>
             {erro && (
-              <div style={{ background: "#FBE7EE", color: COLORS.rose }} className="text-[12.5px] rounded-lg px-3 py-2.5">{erro}</div>
+              <div style={{ background: "#FDECEC", color: COLORS.rose }} className="text-[12.5px] rounded-lg px-3 py-2.5">{erro}</div>
             )}
             <button
               type="submit" disabled={entrando}
-              style={{ background: entrando ? "#9C9EF0" : COLORS.primary }}
+              style={{ background: entrando ? "#7BA0CF" : COLORS.primary }}
               className="text-white text-[13.5px] font-semibold px-4 py-2.5 rounded-lg mt-1"
             >
               {entrando ? "Entrando..." : "Entrar"}
@@ -630,8 +631,8 @@ function Sidebar({ current, setCurrent, user, onLogout }) {
   return (
     <aside style={{ background: COLORS.ink }} className="w-[240px] shrink-0 hidden lg:flex flex-col h-screen sticky top-0 text-white">
       <div className="flex items-center gap-2 px-5 h-16 shrink-0">
-        <div style={{ background: COLORS.primary }} className="h-7 w-7 rounded-md flex items-center justify-center font-bold text-[13px]">W</div>
-        <span className="text-[14px] font-semibold tracking-tight">Wiwap Parceiros</span>
+        <BrandLogo variante="horizontal-negativo" altura={30} />
+        <span className="sr-only">Wiwap Parceiros</span>
       </div>
       <nav className="flex-1 overflow-y-auto px-3 py-2 flex flex-col gap-0.5">
         {items.map((m) => {
@@ -683,8 +684,11 @@ function Topbar({ title, subtitle, user, representantes, lojas, onAbrirRepresent
   const semResultado = termo.length > 0 && repsEncontrados.length === 0 && lojasEncontradas.length === 0;
 
   return (
-    <header style={{ borderColor: COLORS.border }} className="h-16 shrink-0 border-b flex items-center justify-between px-6 bg-white/70 backdrop-blur sticky top-0 z-10">
-      <div>
+    <header style={{ borderColor: COLORS.border }} className="min-h-16 shrink-0 border-b flex items-center justify-between gap-6 px-4 sm:px-6 py-3 bg-white/70 backdrop-blur sticky top-0 z-10">
+      <div className="lg:hidden shrink-0">
+        <BrandLogo variante="simbolo" />
+      </div>
+      <div className="flex-1 min-w-0">
         <h1 style={{ color: COLORS.text }} className="text-[17px] font-semibold leading-none">{title}</h1>
         {subtitle && <p style={{ color: COLORS.muted }} className="text-[12.5px] mt-1">{subtitle}</p>}
       </div>
@@ -696,7 +700,7 @@ function Topbar({ title, subtitle, user, representantes, lojas, onAbrirRepresent
               value={busca}
               onChange={(e) => setBusca(e.target.value)}
               placeholder="Buscar representante, loja..."
-              className="bg-transparent outline-none text-[13px] w-full placeholder:text-[#9AA0AE]"
+              className="bg-transparent outline-none text-[13px] w-full placeholder:text-[#69707D]"
             />
             {busca && <button onClick={() => setBusca("")} style={{ color: COLORS.muted }}><X size={13} /></button>}
           </div>
@@ -706,7 +710,7 @@ function Topbar({ title, subtitle, user, representantes, lojas, onAbrirRepresent
                 <div>
                   <div style={{ color: COLORS.muted }} className="text-[10.5px] font-medium px-3 pt-2.5">REPRESENTANTES</div>
                   {repsEncontrados.map((r) => (
-                    <button key={r.id} onClick={() => { onAbrirRepresentante(r); setBusca(""); }} className="w-full text-left px-3 py-2 hover:bg-[#FAFAFD] flex items-center gap-2">
+                    <button key={r.id} onClick={() => { onAbrirRepresentante(r); setBusca(""); }} className="w-full text-left px-3 py-2 hover:bg-[#FCFCFC] flex items-center gap-2">
                       <Users size={13} style={{ color: COLORS.muted }} />
                       <span style={{ color: COLORS.text }} className="text-[12.5px]">{r.nomeCompleto}</span>
                     </button>
@@ -717,7 +721,7 @@ function Topbar({ title, subtitle, user, representantes, lojas, onAbrirRepresent
                 <div>
                   <div style={{ color: COLORS.muted }} className="text-[10.5px] font-medium px-3 pt-2.5">LOJAS</div>
                   {lojasEncontradas.map((l) => (
-                    <button key={l.id} onClick={() => { onAbrirLoja(l); setBusca(""); }} className="w-full text-left px-3 py-2 hover:bg-[#FAFAFD] flex items-center gap-2">
+                    <button key={l.id} onClick={() => { onAbrirLoja(l); setBusca(""); }} className="w-full text-left px-3 py-2 hover:bg-[#FCFCFC] flex items-center gap-2">
                       <Store size={13} style={{ color: COLORS.muted }} />
                       <span style={{ color: COLORS.text }} className="text-[12.5px]">{l.nomeFantasia}</span>
                       <span style={{ color: COLORS.muted }} className="text-[11px]">{l.codigo}</span>
@@ -729,7 +733,7 @@ function Topbar({ title, subtitle, user, representantes, lojas, onAbrirRepresent
             </div>
           )}
         </div>
-        <div style={{ background: "#EEEEFB", color: COLORS.primaryDeep }} className="text-[12px] font-medium px-2.5 py-1.5 rounded-md hidden sm:block">
+        <div style={{ background: "#E7EEFB", color: COLORS.primaryDeep }} className="text-[12px] font-medium px-2.5 py-1.5 rounded-md hidden sm:block">
           {PERFIL_LABEL[user.perfil]}
         </div>
       </div>
@@ -823,7 +827,7 @@ function VisaoGeralView({ representantes, lojas, user }) {
               {ranking.map((r, i) => (
                 <div key={r.id} className="flex items-center gap-3">
                   <span style={{ color: COLORS.muted }} className="text-[12px] w-4">{i + 1}</span>
-                  <div style={{ background: "#EEEEFB", color: COLORS.primaryDeep }} className="h-8 w-8 rounded-full flex items-center justify-center text-[11.5px] font-semibold shrink-0">
+                  <div style={{ background: "#E7EEFB", color: COLORS.primaryDeep }} className="h-8 w-8 rounded-full flex items-center justify-center text-[11.5px] font-semibold shrink-0">
                     {r.nomeCompleto.split(" ").map((n) => n[0]).slice(0, 2).join("")}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -869,7 +873,7 @@ function NovoRepresentanteModal({ parametros, onClose, onCriar }) {
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#141D2E]/40" onClick={onClose} />
       <div style={{ background: COLORS.surface }} className="relative w-full max-w-[480px] max-h-[88vh] overflow-y-auto rounded-2xl shadow-2xl p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 style={{ color: COLORS.text }} className="text-[16px] font-semibold">Novo representante</h3>
@@ -914,7 +918,7 @@ function NovoRepresentanteModal({ parametros, onClose, onCriar }) {
         </div>
         <div className="flex justify-end gap-2 mt-6">
           <button onClick={onClose} style={{ color: COLORS.text }} className="text-[13px] font-medium px-3.5 py-2">Cancelar</button>
-          <button disabled={!podeSalvar} onClick={salvar} style={{ background: podeSalvar ? COLORS.primary : "#C7C8EE" }} className="text-white text-[13px] font-medium px-4 py-2 rounded-lg">Cadastrar representante</button>
+          <button disabled={!podeSalvar} onClick={salvar} style={{ background: podeSalvar ? COLORS.primary : "#ADC6E7" }} className="text-white text-[13px] font-medium px-4 py-2 rounded-lg">Cadastrar representante</button>
         </div>
       </div>
     </div>
@@ -935,8 +939,8 @@ function RepresentantesView({ representantes, lojas, onSelect, onCriar, parametr
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center gap-3 justify-between">
-        <div className="flex items-center gap-2">
-          <div style={{ borderColor: COLORS.border, background: COLORS.surface }} className="flex items-center gap-2 border rounded-lg px-3 py-2 w-[260px]">
+        <div className="flex flex-wrap items-center gap-2">
+          <div style={{ borderColor: COLORS.border, background: COLORS.surface }} className="flex items-center gap-2 border rounded-lg px-3 py-2 w-[260px] max-w-full">
             <Search size={14} style={{ color: COLORS.muted }} />
             <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Buscar por nome" className="bg-transparent outline-none text-[13px] w-full" />
           </div>
@@ -955,7 +959,7 @@ function RepresentantesView({ representantes, lojas, onSelect, onCriar, parametr
         </button>
       </div>
 
-      <div style={{ borderColor: COLORS.border, background: COLORS.surface }} className="border rounded-xl overflow-hidden">
+      <div style={{ borderColor: COLORS.border, background: COLORS.surface }} className="border rounded-xl overflow-x-auto">
         <table className="w-full text-[13px]">
           <thead>
             <tr style={{ borderColor: COLORS.border, color: COLORS.muted }} className="border-b text-left">
@@ -972,7 +976,7 @@ function RepresentantesView({ representantes, lojas, onSelect, onCriar, parametr
               const qtdLojas = lojas.filter((l) => l.representanteAtualId === r.id).length;
               const gestor = GESTORES.find((g) => g.id === r.gestorId);
               return (
-                <tr key={r.id} style={{ borderColor: COLORS.border }} className="border-b last:border-0 hover:bg-[#FAFAFD] cursor-pointer" onClick={() => onSelect(r)}>
+                <tr key={r.id} style={{ borderColor: COLORS.border }} className="border-b last:border-0 hover:bg-[#FCFCFC] cursor-pointer" onClick={() => onSelect(r)}>
                   <td className="px-4 py-3">
                     <div style={{ color: COLORS.text }} className="font-medium">{r.nomeCompleto}</div>
                     <div style={{ color: COLORS.muted }} className="text-[12px]">{r.nomeEmpresarial}</div>
@@ -1083,7 +1087,7 @@ function RepresentanteDrawer({ representante, lojas, onClose, onAtualizar, api, 
 
   return (
     <div className="fixed inset-0 z-30 flex justify-end">
-      <div className="absolute inset-0 bg-black/30" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#141D2E]/30" onClick={onClose} />
       <div style={{ background: COLORS.surface }} className="relative w-full max-w-[480px] h-full overflow-y-auto shadow-2xl flex flex-col">
         <div style={{ borderColor: COLORS.border }} className="border-b px-6 py-5 flex items-start justify-between sticky top-0 bg-white z-10">
           <div>
@@ -1103,7 +1107,7 @@ function RepresentanteDrawer({ representante, lojas, onClose, onAtualizar, api, 
               ))}
             </div>
           </div>
-          <button onClick={onClose} style={{ color: COLORS.muted }} className="p-1.5 hover:bg-black/5 rounded-md"><X size={18} /></button>
+          <button onClick={onClose} style={{ color: COLORS.muted }} className="p-1.5 hover:bg-[#141D2E]/5 rounded-md"><X size={18} /></button>
         </div>
 
         <div style={{ borderColor: COLORS.border }} className="border-b flex items-center justify-between px-6">
@@ -1220,7 +1224,7 @@ function TransferirLojaModal({ loja, representantes, onClose, onConfirm }) {
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#141D2E]/40" onClick={onClose} />
       <div style={{ background: COLORS.surface }} className="relative w-full max-w-[440px] rounded-2xl shadow-2xl p-6">
         <div className="flex items-center justify-between mb-1">
           <h3 style={{ color: COLORS.text }} className="text-[16px] font-semibold flex items-center gap-2">
@@ -1262,7 +1266,7 @@ function TransferirLojaModal({ loja, representantes, onClose, onConfirm }) {
           placeholder="Ex.: reorganização de carteira por região"
         />
 
-        <div style={{ background: "#F6F6FB", color: COLORS.muted }} className="text-[11.5px] rounded-lg px-3 py-2.5 mb-5">
+        <div style={{ background: "#F4F5F7", color: COLORS.muted }} className="text-[11.5px] rounded-lg px-3 py-2.5 mb-5">
           O histórico anterior é mantido — esta ação cria um novo registro de vínculo, sem apagar os anteriores.
         </div>
 
@@ -1271,7 +1275,7 @@ function TransferirLojaModal({ loja, representantes, onClose, onConfirm }) {
           <button
             disabled={!novoRepId || !dataEfetiva}
             onClick={() => onConfirm({ novoRepId, dataEfetiva, motivo })}
-            style={{ background: novoRepId && dataEfetiva ? COLORS.primary : "#C7C8EE" }}
+            style={{ background: novoRepId && dataEfetiva ? COLORS.primary : "#ADC6E7" }}
             className="text-white text-[13px] font-medium px-4 py-2 rounded-lg"
           >
             Confirmar transferência
@@ -1306,7 +1310,7 @@ function NovaLojaModal({ representantes, onClose, onCriar }) {
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#141D2E]/40" onClick={onClose} />
       <div style={{ background: COLORS.surface }} className="relative w-full max-w-[440px] rounded-2xl shadow-2xl p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 style={{ color: COLORS.text }} className="text-[16px] font-semibold">Nova loja</h3>
@@ -1343,7 +1347,7 @@ function NovaLojaModal({ representantes, onClose, onCriar }) {
         </div>
         <div className="flex justify-end gap-2 mt-6">
           <button onClick={onClose} style={{ color: COLORS.text }} className="text-[13px] font-medium px-3.5 py-2">Cancelar</button>
-          <button disabled={!podeSalvar} onClick={salvar} style={{ background: podeSalvar ? COLORS.primary : "#C7C8EE" }} className="text-white text-[13px] font-medium px-4 py-2 rounded-lg">Cadastrar loja</button>
+          <button disabled={!podeSalvar} onClick={salvar} style={{ background: podeSalvar ? COLORS.primary : "#ADC6E7" }} className="text-white text-[13px] font-medium px-4 py-2 rounded-lg">Cadastrar loja</button>
         </div>
       </div>
     </div>
@@ -1398,7 +1402,7 @@ function CarteiraLojasView({ lojas, representantes, api, onTransferir, onCriarLo
         )}
       </div>
 
-      <div style={{ borderColor: COLORS.border, background: COLORS.surface }} className="border rounded-xl overflow-hidden">
+      <div style={{ borderColor: COLORS.border, background: COLORS.surface }} className="border rounded-xl overflow-x-auto">
         <table className="w-full text-[13px]">
           <thead>
             <tr style={{ borderColor: COLORS.border, color: COLORS.muted }} className="border-b text-left">
@@ -1416,7 +1420,7 @@ function CarteiraLojasView({ lojas, representantes, api, onTransferir, onCriarLo
               const rep = representantes.find((r) => r.id === l.representanteAtualId);
               const alerta = l.status === "ativa" && l.diasSemVender > 30;
               return (
-                <tr key={l.id} style={{ borderColor: COLORS.border }} className="border-b last:border-0 hover:bg-[#FAFAFD]">
+                <tr key={l.id} style={{ borderColor: COLORS.border }} className="border-b last:border-0 hover:bg-[#FCFCFC]">
                   <td className="px-4 py-3">
                     <div style={{ color: COLORS.text }} className="font-medium flex items-center gap-1.5">
                       {l.nomeFantasia}
@@ -1431,7 +1435,7 @@ function CarteiraLojasView({ lojas, representantes, api, onTransferir, onCriarLo
                   <td className="px-4 py-3"><StatusBadge status={l.status} /></td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-end gap-3">
-                      <button onClick={() => setHistoricoDe(l)} title="Ver histórico" style={{ color: COLORS.muted }} className="hover:text-black"><Clock size={15} /></button>
+                      <button onClick={() => setHistoricoDe(l)} title="Ver histórico" style={{ color: COLORS.muted }} className="hover:text-[color:var(--wiwap-ink)]"><Clock size={15} /></button>
                       {!isRep && (
                         <button onClick={() => setTransferindo(l)} title="Transferir loja" style={{ color: COLORS.primaryDeep }} className="hover:opacity-70"><ArrowRightLeft size={15} /></button>
                       )}
@@ -1458,7 +1462,7 @@ function CarteiraLojasView({ lojas, representantes, api, onTransferir, onCriarLo
 
       {historicoDe && (
         <div className="fixed inset-0 z-40 flex items-center justify-center px-4">
-          <div className="absolute inset-0 bg-black/40" onClick={() => setHistoricoDe(null)} />
+          <div className="absolute inset-0 bg-[#141D2E]/40" onClick={() => setHistoricoDe(null)} />
           <div style={{ background: COLORS.surface }} className="relative w-full max-w-[440px] rounded-2xl shadow-2xl p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 style={{ color: COLORS.text }} className="text-[16px] font-semibold">Histórico de vínculo · {historicoDe.nomeFantasia}</h3>
@@ -1498,15 +1502,15 @@ function CarteiraLojasView({ lojas, representantes, api, onTransferir, onCriarLo
 ============================================================================ */
 
 const STATUS_VENDA_STYLES = {
-  Simulada: { bg: "#EEF0F4", fg: "#6B7185", label: "Simulada" },
-  Aprovada: { bg: "#EAEAFB", fg: "#3733B0", label: "Aprovada" },
-  Formalizada: { bg: "#EAEAFB", fg: "#3733B0", label: "Formalizada" },
-  Liquidada: { bg: "#E7F6EF", fg: "#0F9D6B", label: "Liquidada" },
-  "Em pagamento": { bg: "#FDF1DE", fg: "#B8720A", label: "Em pagamento" },
-  Quitada: { bg: "#E7F6EF", fg: "#0F9D6B", label: "Quitada" },
-  Inadimplente: { bg: "#FBE7EE", fg: "#C4275D", label: "Inadimplente" },
-  Cancelada: { bg: "#F1F1F1", fg: "#8A8F9C", label: "Cancelada" },
-  Estornada: { bg: "#F1F1F1", fg: "#8A8F9C", label: "Estornada" },
+  Simulada: { bg: "#F4F5F7", fg: "#5B6472", label: "Simulada" },
+  Aprovada: { bg: "#E7EEFB", fg: "#00223F", label: "Aprovada" },
+  Formalizada: { bg: "#E7EEFB", fg: "#00223F", label: "Formalizada" },
+  Liquidada: { bg: "#E9F7EF", fg: "#15803D", label: "Liquidada" },
+  "Em pagamento": { bg: "#FEF3C7", fg: "#B45309", label: "Em pagamento" },
+  Quitada: { bg: "#E9F7EF", fg: "#15803D", label: "Quitada" },
+  Inadimplente: { bg: "#FDECEC", fg: "#B91C1C", label: "Inadimplente" },
+  Cancelada: { bg: "#F4F5F7", fg: "#69707D", label: "Cancelada" },
+  Estornada: { bg: "#F4F5F7", fg: "#69707D", label: "Estornada" },
 };
 
 function ImportarVendasModal({ api, onClose, onImportado }) {
@@ -1539,7 +1543,7 @@ function ImportarVendasModal({ api, onClose, onImportado }) {
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#141D2E]/40" onClick={onClose} />
       <div style={{ background: COLORS.surface }} className="relative w-full max-w-[480px] rounded-2xl shadow-2xl p-6">
         <div className="flex items-center justify-between mb-1">
           <h3 style={{ color: COLORS.text }} className="text-[16px] font-semibold flex items-center gap-2"><FileUp size={17} /> Importar vendas</h3>
@@ -1549,16 +1553,16 @@ function ImportarVendasModal({ api, onClose, onImportado }) {
 
         <button onClick={baixarModelo} style={{ color: COLORS.primaryDeep }} className="text-[12.5px] font-medium mb-4">Baixar modelo CSV</button>
 
-        <label style={{ borderColor: COLORS.border }} className="border border-dashed rounded-xl flex flex-col items-center justify-center gap-2 py-8 cursor-pointer hover:bg-[#FAFAFD]">
+        <label style={{ borderColor: COLORS.border }} className="border border-dashed rounded-xl flex flex-col items-center justify-center gap-2 py-8 cursor-pointer hover:bg-[#FCFCFC]">
           <Upload size={20} style={{ color: COLORS.muted }} />
           <span style={{ color: COLORS.text }} className="text-[12.5px] font-medium">{processando ? "Processando..." : "Clique para selecionar o arquivo .csv"}</span>
           <input type="file" accept=".csv" className="hidden" onChange={(e) => e.target.files[0] && processarArquivo(e.target.files[0])} />
         </label>
 
-        {erro && <div style={{ background: "#FBE7EE", color: COLORS.rose }} className="text-[12.5px] rounded-lg px-3 py-2.5 mt-3">{erro}</div>}
+        {erro && <div style={{ background: "#FDECEC", color: COLORS.rose }} className="text-[12.5px] rounded-lg px-3 py-2.5 mt-3">{erro}</div>}
 
         {relatorio && (
-          <div style={{ borderColor: COLORS.border, background: "#FAFAFD" }} className="border rounded-lg p-3.5 mt-4">
+          <div style={{ borderColor: COLORS.border, background: "#FCFCFC" }} className="border rounded-lg p-3.5 mt-4">
             <div style={{ color: COLORS.text }} className="text-[12.5px] font-semibold mb-2">Relatório de importação</div>
             <div className="grid grid-cols-2 gap-y-1.5 text-[12px]">
               <span style={{ color: COLORS.muted }}>Registros recebidos</span><span style={{ color: COLORS.text }}>{relatorio.recebidos}</span>
@@ -1582,7 +1586,7 @@ function ImportarVendasModal({ api, onClose, onImportado }) {
 function VendaDetalhe({ venda, loja, representante, onClose }) {
   return (
     <div className="fixed inset-0 z-30 flex justify-end">
-      <div className="absolute inset-0 bg-black/30" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#141D2E]/30" onClick={onClose} />
       <div style={{ background: COLORS.surface }} className="relative w-full max-w-[440px] h-full overflow-y-auto shadow-2xl">
         <div style={{ borderColor: COLORS.border }} className="border-b px-6 py-5 flex items-start justify-between sticky top-0 bg-white">
           <div>
@@ -1590,7 +1594,7 @@ function VendaDetalhe({ venda, loja, representante, onClose }) {
             <p style={{ color: COLORS.muted }} className="text-[12.5px] mt-0.5">{venda.data} · {venda.produto}</p>
             <div className="mt-2"><StatusBadge status={venda.status} styles={STATUS_VENDA_STYLES} /></div>
           </div>
-          <button onClick={onClose} style={{ color: COLORS.muted }} className="p-1.5 hover:bg-black/5 rounded-md"><X size={18} /></button>
+          <button onClick={onClose} style={{ color: COLORS.muted }} className="p-1.5 hover:bg-[#141D2E]/5 rounded-md"><X size={18} /></button>
         </div>
         <div className="p-6 grid grid-cols-2 gap-x-4 gap-y-0.5">
           <InfoRow icon={Building2} label="Loja" value={loja?.nomeFantasia} />
@@ -1673,7 +1677,7 @@ function VendasView({ vendas, lojas, representantes, user, api, onImportado }) {
         )}
       </div>
 
-      <div style={{ borderColor: COLORS.border, background: COLORS.surface }} className="border rounded-xl overflow-hidden">
+      <div style={{ borderColor: COLORS.border, background: COLORS.surface }} className="border rounded-xl overflow-x-auto">
         <table className="w-full text-[13px]">
           <thead>
             <tr style={{ borderColor: COLORS.border, color: COLORS.muted }} className="border-b text-left">
@@ -1690,7 +1694,7 @@ function VendasView({ vendas, lojas, representantes, user, api, onImportado }) {
               const loja = lojas.find((l) => l.id === v.lojaId);
               const rep = representantes.find((r) => r.id === v.representanteId);
               return (
-                <tr key={v.id} style={{ borderColor: COLORS.border }} className="border-b last:border-0 hover:bg-[#FAFAFD] cursor-pointer" onClick={() => setDetalhe(v)}>
+                <tr key={v.id} style={{ borderColor: COLORS.border }} className="border-b last:border-0 hover:bg-[#FCFCFC] cursor-pointer" onClick={() => setDetalhe(v)}>
                   <td className="px-4 py-3">
                     <div style={{ color: COLORS.text }} className="font-medium">{v.codigo}</div>
                     <div style={{ color: COLORS.muted }} className="text-[12px]">{v.produto}</div>
@@ -1712,8 +1716,8 @@ function VendasView({ vendas, lojas, representantes, user, api, onImportado }) {
           <div style={{ borderColor: COLORS.border }} className="border-t flex items-center justify-between px-4 py-2.5">
             <span style={{ color: COLORS.muted }} className="text-[12px]">Página {pagina_} de {totalPaginas} · {filtradas.length} vendas</span>
             <div className="flex items-center gap-1.5">
-              <button disabled={pagina_ === 1} onClick={() => setPagina((p) => p - 1)} style={{ color: pagina_ === 1 ? "#C7C8D6" : COLORS.text }}><ChevronLeft size={16} /></button>
-              <button disabled={pagina_ === totalPaginas} onClick={() => setPagina((p) => p + 1)} style={{ color: pagina_ === totalPaginas ? "#C7C8D6" : COLORS.text }}><ChevronRight size={16} /></button>
+              <button disabled={pagina_ === 1} onClick={() => setPagina((p) => p - 1)} style={{ color: pagina_ === 1 ? "#DADADA" : COLORS.text }}><ChevronLeft size={16} /></button>
+              <button disabled={pagina_ === totalPaginas} onClick={() => setPagina((p) => p + 1)} style={{ color: pagina_ === totalPaginas ? "#DADADA" : COLORS.text }}><ChevronRight size={16} /></button>
             </div>
           </div>
         )}
@@ -1841,7 +1845,7 @@ function FaixasEditor({ faixas, modelo, onChangeFaixas, onChangeModelo }) {
                   <input type="number" value={f.de} onChange={(e) => atualizarFaixa(i, "de", e.target.value)} className="w-24 outline-none bg-transparent" />
                 </td>
                 <td className="px-3 py-1.5">
-                  <input type="number" placeholder="sem teto" value={f.ate ?? ""} onChange={(e) => atualizarFaixa(i, "ate", e.target.value)} className="w-24 outline-none bg-transparent placeholder:text-[#B7BAC5]" />
+                  <input type="number" placeholder="sem teto" value={f.ate ?? ""} onChange={(e) => atualizarFaixa(i, "ate", e.target.value)} className="w-24 outline-none bg-transparent placeholder:text-[#B4BAC4]" />
                 </td>
                 <td className="px-3 py-1.5">
                   <input type="number" step="0.01" value={f.percentual} onChange={(e) => atualizarFaixa(i, "percentual", e.target.value)} className="w-16 outline-none bg-transparent" />%
@@ -1864,7 +1868,7 @@ function FaixasEditor({ faixas, modelo, onChangeFaixas, onChangeModelo }) {
         </button>
       </div>
 
-      <div style={{ borderColor: COLORS.border, background: "#FAFAFD" }} className="border rounded-lg p-3.5">
+      <div style={{ borderColor: COLORS.border, background: "#FCFCFC" }} className="border rounded-lg p-3.5">
         <div className="flex items-center justify-between mb-2.5">
           <span style={{ color: COLORS.muted }} className="text-[12px]">Memória de cálculo — simulação de exemplo sobre</span>
           <div className="flex items-center gap-1.5">
@@ -1927,7 +1931,7 @@ function CampoToggle({ label, value, onChange }) {
   return (
     <button onClick={() => onChange(!value)} className="flex items-center justify-between w-full py-1.5">
       <span style={{ color: COLORS.text }} className="text-[12.5px]">{label}</span>
-      <span style={{ background: value ? COLORS.primary : "#DCDDE6" }} className="w-9 h-5 rounded-full relative transition-colors shrink-0">
+      <span style={{ background: value ? COLORS.primary : "#DADADA" }} className="w-9 h-5 rounded-full relative transition-colors shrink-0">
         <span style={{ transform: value ? "translateX(16px)" : "translateX(2px)" }} className="absolute top-0.5 h-4 w-4 rounded-full bg-white transition-transform" />
       </span>
     </button>
@@ -1942,7 +1946,7 @@ function RegraEditorModal({ regraInicial, onClose, onSalvar }) {
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#141D2E]/40" onClick={onClose} />
       <div style={{ background: COLORS.surface }} className="relative w-full max-w-[560px] max-h-[88vh] overflow-y-auto rounded-2xl shadow-2xl p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 style={{ color: COLORS.text }} className="text-[16px] font-semibold">{regraInicial.__novo ? "Adicionar regra" : "Editar regra"}</h3>
@@ -2060,7 +2064,7 @@ function RegraEditorModal({ regraInicial, onClose, onSalvar }) {
 function AprovacaoBox({ condicao, onAprovar, onReprovar, user }) {
   const podeAprovar = ["diretoria", "administrador"].includes(user.perfil);
   return (
-    <div style={{ borderColor: "#F0DDB8", background: "#FFFBF2" }} className="border rounded-xl p-4">
+    <div style={{ borderColor: "#E8730A", background: "#FEF3C7" }} className="border rounded-xl p-4">
       <div className="flex items-center gap-2 mb-3">
         <Gauge size={16} style={{ color: COLORS.amber }} />
         <h4 style={{ color: COLORS.text }} className="text-[13.5px] font-semibold">Aguardando aprovação da diretoria</h4>
@@ -2119,7 +2123,7 @@ function CondicaoDrawer({ condicao, onClose, onSalvar, user, registrarLog }) {
 
   return (
     <div className="fixed inset-0 z-30 flex justify-end">
-      <div className="absolute inset-0 bg-black/30" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#141D2E]/30" onClick={onClose} />
       <div style={{ background: COLORS.surface }} className="relative w-full max-w-[600px] h-full overflow-y-auto shadow-2xl flex flex-col">
         <div style={{ borderColor: COLORS.border }} className="border-b px-6 py-5 sticky top-0 bg-white z-10">
           <div className="flex items-start justify-between">
@@ -2132,7 +2136,7 @@ function CondicaoDrawer({ condicao, onClose, onSalvar, user, registrarLog }) {
               <p style={{ color: COLORS.muted }} className="text-[12.5px] mt-0.5">{dados.tipo} · {dados.elegibilidade}</p>
               <div className="mt-2"><StatusBadge status={dados.status} styles={STATUS_CONDICAO_STYLES} /></div>
             </div>
-            <button onClick={onClose} style={{ color: COLORS.muted }} className="p-1.5 hover:bg-black/5 rounded-md"><X size={18} /></button>
+            <button onClick={onClose} style={{ color: COLORS.muted }} className="p-1.5 hover:bg-[#141D2E]/5 rounded-md"><X size={18} /></button>
           </div>
         </div>
 
@@ -2184,7 +2188,7 @@ function CondicaoDrawer({ condicao, onClose, onSalvar, user, registrarLog }) {
           </div>
 
           {dados.observacoes && (
-            <div style={{ background: "#F6F6FB" }} className="rounded-lg p-3.5">
+            <div style={{ background: "#F4F5F7" }} className="rounded-lg p-3.5">
               <div style={{ color: COLORS.muted }} className="text-[11.5px] font-medium mb-1">Observações</div>
               <p style={{ color: COLORS.text }} className="text-[12.5px] leading-relaxed">{dados.observacoes}</p>
             </div>
@@ -2259,9 +2263,9 @@ function CondicoesComerciaisView({ condicoes, api, recarregar, representantes, u
 
   return (
     <div className="flex flex-col gap-4">
-      {erro && <div style={{ background: "#FBE7EE", color: COLORS.rose }} className="text-[12.5px] rounded-lg px-4 py-2.5">{erro}</div>}
+      {erro && <div style={{ background: "#FDECEC", color: COLORS.rose }} className="text-[12.5px] rounded-lg px-4 py-2.5">{erro}</div>}
       {pendentes > 0 && (
-        <div style={{ background: "#FFFBF2", borderColor: "#F0DDB8", color: "#8A5A05" }} className="border rounded-xl px-4 py-3 text-[13px] flex items-center gap-2">
+        <div style={{ background: "#FEF3C7", borderColor: "#E8730A", color: "#B45309" }} className="border rounded-xl px-4 py-3 text-[13px] flex items-center gap-2">
           <Gauge size={15} />
           {pendentes} condição{pendentes > 1 ? "ões" : ""} comercial{pendentes > 1 ? "is" : ""} aguardando aprovação da diretoria.
         </div>
@@ -2285,7 +2289,7 @@ function CondicoesComerciaisView({ condicoes, api, recarregar, representantes, u
             key={c.id}
             onClick={() => setSelecionada(c)}
             style={{ borderColor: COLORS.border, background: COLORS.surface }}
-            className="text-left border rounded-xl p-4 hover:border-[#C7C8EE] transition-colors"
+            className="text-left border rounded-xl p-4 hover:border-[#ADC6E7] transition-colors"
           >
             <div className="flex items-start justify-between gap-3 mb-2">
               <div>
@@ -2297,7 +2301,7 @@ function CondicoesComerciaisView({ condicoes, api, recarregar, representantes, u
             <p style={{ color: COLORS.muted }} className="text-[12.5px] leading-relaxed line-clamp-2 mb-3">{c.descricao}</p>
             <div className="flex items-center gap-1.5 flex-wrap">
               {c.regras.slice(0, 3).map((r) => (
-                <span key={r.id} style={{ background: "#F6F6FB", color: COLORS.text }} className="text-[11px] px-2 py-1 rounded-md">{regraTipo(r.tipoId).label}</span>
+                <span key={r.id} style={{ background: "#F4F5F7", color: COLORS.text }} className="text-[11px] px-2 py-1 rounded-md">{regraTipo(r.tipoId).label}</span>
               ))}
               {c.regras.length > 3 && <span style={{ color: COLORS.muted }} className="text-[11px]">+{c.regras.length - 3}</span>}
               {c.regras.length === 0 && <span style={{ color: COLORS.muted }} className="text-[11px]">Nenhuma regra configurada ainda</span>}
@@ -2596,13 +2600,13 @@ function MemoriaCalculo({ resultado }) {
 function ResultadoCondicao({ condicao, resultado, destaque }) {
   const [aberto, setAberto] = useState(false);
   return (
-    <div style={{ borderColor: destaque ? COLORS.primary : COLORS.border, background: COLORS.surface }} className={`border rounded-xl p-4 ${destaque ? "ring-1" : ""}`}>
+    <div style={{ borderColor: destaque ? COLORS.primary : COLORS.border, background: COLORS.surface }} className={`border rounded-xl p-4 ${destaque ? "ring-1 ring-[#003060]" : ""}`}>
       <div className="flex items-start justify-between gap-2 mb-3">
         <div>
           <div style={{ color: COLORS.text }} className="text-[14px] font-semibold">{condicao.nome}</div>
           <StatusBadge status={condicao.status} styles={STATUS_CONDICAO_STYLES} />
         </div>
-        {destaque && <span style={{ background: "#EEEEFB", color: COLORS.primaryDeep }} className="text-[11px] font-medium px-2 py-1 rounded-md flex items-center gap-1"><Award size={12} /> {destaque}</span>}
+        {destaque && <span style={{ background: "#E7EEFB", color: COLORS.primaryDeep }} className="text-[11px] font-medium px-2 py-1 rounded-md flex items-center gap-1"><Award size={12} /> {destaque}</span>}
       </div>
 
       <div style={{ color: COLORS.muted }} className="text-[11.5px]">Comissão líquida do representante</div>
@@ -2634,7 +2638,7 @@ function ResultadoCondicao({ condicao, resultado, destaque }) {
         Memória de cálculo
       </button>
       {aberto && (
-        <div style={{ background: "#FAFAFD", borderColor: COLORS.border }} className="border rounded-lg p-3 mt-2">
+        <div style={{ background: "#FCFCFC", borderColor: COLORS.border }} className="border rounded-lg p-3 mt-2">
           <MemoriaCalculo resultado={resultado} />
         </div>
       )}
@@ -2694,7 +2698,7 @@ function SimuladorView({ condicoes, representantes, parametros }) {
 
   return (
     <div className="flex flex-col gap-5">
-      <div style={{ borderColor: COLORS.border, background: "#F6F6FB" }} className="border rounded-xl px-4 py-3 flex items-start gap-2.5">
+      <div style={{ borderColor: COLORS.border, background: "#F4F5F7" }} className="border rounded-xl px-4 py-3 flex items-start gap-2.5">
         <Sparkles size={16} style={{ color: COLORS.primaryDeep }} className="mt-0.5 shrink-0" />
         <p style={{ color: COLORS.text }} className="text-[12.5px] leading-relaxed">
           O simulador roda o mesmo motor de cálculo que processará as vendas reais no fechamento mensal — aqui, os números do cenário
@@ -2801,15 +2805,15 @@ const STATUS_FECHAMENTO_ORDER = [
   "aguardando_aprovacao", "aguardando_nota_fiscal", "programado", "pago", "encerrado",
 ];
 const STATUS_FECHAMENTO_STYLES = {
-  em_processamento: { bg: "#EEF0F4", fg: "#6B7185", label: "Em processamento" },
-  em_conferencia: { bg: "#EAEAFB", fg: "#3733B0", label: "Em conferência" },
-  aguardando_representante: { bg: "#FDF1DE", fg: "#B8720A", label: "Aguardando representante" },
-  em_contestacao: { bg: "#FBE7EE", fg: "#C4275D", label: "Em contestação" },
-  aguardando_aprovacao: { bg: "#FDF1DE", fg: "#B8720A", label: "Aguardando aprovação" },
-  aguardando_nota_fiscal: { bg: "#EAEAFB", fg: "#3733B0", label: "Aguardando nota fiscal" },
-  programado: { bg: "#EAEAFB", fg: "#3733B0", label: "Programado" },
-  pago: { bg: "#E7F6EF", fg: "#0F9D6B", label: "Pago" },
-  encerrado: { bg: "#F1F1F1", fg: "#8A8F9C", label: "Encerrado" },
+  em_processamento: { bg: "#F4F5F7", fg: "#5B6472", label: "Em processamento" },
+  em_conferencia: { bg: "#E7EEFB", fg: "#00223F", label: "Em conferência" },
+  aguardando_representante: { bg: "#FEF3C7", fg: "#B45309", label: "Aguardando representante" },
+  em_contestacao: { bg: "#FDECEC", fg: "#B91C1C", label: "Em contestação" },
+  aguardando_aprovacao: { bg: "#FEF3C7", fg: "#B45309", label: "Aguardando aprovação" },
+  aguardando_nota_fiscal: { bg: "#E7EEFB", fg: "#00223F", label: "Aguardando nota fiscal" },
+  programado: { bg: "#E7EEFB", fg: "#00223F", label: "Programado" },
+  pago: { bg: "#E9F7EF", fg: "#15803D", label: "Pago" },
+  encerrado: { bg: "#F4F5F7", fg: "#69707D", label: "Encerrado" },
 };
 
 // Simplificação assumida para a demonstração: como o cadastro de vendas não
@@ -2879,7 +2883,7 @@ function TimelineFechamento({ status }) {
             <div className="flex flex-col items-center gap-1">
               <div
                 style={{
-                  background: concluido ? COLORS.emerald : atual ? COLORS.primary : "#E3E5EC",
+                  background: concluido ? COLORS.emerald : atual ? COLORS.primary : "#DADADA",
                   color: concluido || atual ? "white" : COLORS.muted,
                 }}
                 className="h-6 w-6 rounded-full flex items-center justify-center text-[10.5px] font-semibold"
@@ -2891,7 +2895,7 @@ function TimelineFechamento({ status }) {
               </span>
             </div>
             {i < STATUS_FECHAMENTO_ORDER.length - 1 && (
-              <div style={{ background: concluido ? COLORS.emerald : "#E3E5EC" }} className="h-[2px] w-6 mb-4" />
+              <div style={{ background: concluido ? COLORS.emerald : "#DADADA" }} className="h-[2px] w-6 mb-4" />
             )}
           </div>
         );
@@ -2909,7 +2913,7 @@ function ContestacaoModal({ vendasRelacionadas, onClose, onEnviar }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#141D2E]/40" onClick={onClose} />
       <div style={{ background: COLORS.surface }} className="relative w-full max-w-[440px] rounded-2xl shadow-2xl p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 style={{ color: COLORS.text }} className="text-[16px] font-semibold flex items-center gap-2"><MessageSquareWarning size={17} /> Abrir contestação</h3>
@@ -2940,7 +2944,7 @@ function ContestacaoModal({ vendasRelacionadas, onClose, onEnviar }) {
           <button
             disabled={!motivo}
             onClick={() => onEnviar({ id: `cont_${Date.now()}`, motivo, lojaOuVenda, valorQuestionado, descricao, anexo, status: "aberta" })}
-            style={{ background: motivo ? COLORS.primary : "#C7C8EE" }}
+            style={{ background: motivo ? COLORS.primary : "#ADC6E7" }}
             className="text-white text-[13px] font-medium px-4 py-2 rounded-lg"
           >
             Enviar contestação
@@ -2977,7 +2981,7 @@ function FechamentoDetalhe({ fechamento, api, recarregar, representante, user, r
 
   return (
     <div className="fixed inset-0 z-30 flex justify-end">
-      <div className="absolute inset-0 bg-black/30" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#141D2E]/30" onClick={onClose} />
       <div style={{ background: COLORS.surface }} className="relative w-full max-w-[560px] h-full overflow-y-auto shadow-2xl">
         <div style={{ borderColor: COLORS.border }} className="border-b px-6 py-5 sticky top-0 bg-white z-10">
           <div className="flex items-start justify-between mb-4">
@@ -2985,13 +2989,13 @@ function FechamentoDetalhe({ fechamento, api, recarregar, representante, user, r
               <h2 style={{ color: COLORS.text }} className="text-[17px] font-semibold">{representante?.nomeCompleto}</h2>
               <p style={{ color: COLORS.muted }} className="text-[12.5px] mt-0.5">{fechamento.competencia} · {fechamento.condicao?.nome}</p>
             </div>
-            <button onClick={onClose} style={{ color: COLORS.muted }} className="p-1.5 hover:bg-black/5 rounded-md"><X size={18} /></button>
+            <button onClick={onClose} style={{ color: COLORS.muted }} className="p-1.5 hover:bg-[#141D2E]/5 rounded-md"><X size={18} /></button>
           </div>
           <TimelineFechamento status={fechamento.status} />
         </div>
 
         <div className="p-6 flex flex-col gap-5">
-          {erro && <div style={{ background: "#FBE7EE", color: COLORS.rose }} className="text-[12.5px] rounded-lg px-3 py-2.5">{erro}</div>}
+          {erro && <div style={{ background: "#FDECEC", color: COLORS.rose }} className="text-[12.5px] rounded-lg px-3 py-2.5">{erro}</div>}
           {resultado && (
             <div style={{ borderColor: COLORS.border, background: COLORS.surface }} className="border rounded-xl p-4">
               <div style={{ color: COLORS.muted }} className="text-[11.5px]">Comissão apurada</div>
@@ -3015,7 +3019,7 @@ function FechamentoDetalhe({ fechamento, api, recarregar, representante, user, r
             <div>
               <h4 style={{ color: COLORS.text }} className="text-[13.5px] font-semibold mb-2">Contestações</h4>
               {fechamento.contestacoes.map((c) => (
-                <div key={c.id} style={{ borderColor: "#F0DDB8", background: "#FFFBF2" }} className="border rounded-lg p-3.5">
+                <div key={c.id} style={{ borderColor: "#E8730A", background: "#FEF3C7" }} className="border rounded-lg p-3.5">
                   <div style={{ color: COLORS.text }} className="text-[13px] font-medium">{c.motivo}</div>
                   <div style={{ color: COLORS.muted }} className="text-[12px] mt-1">{c.lojaOuVenda} · {c.valorQuestionado ? fmtBRL(Number(c.valorQuestionado)) : "—"}</div>
                   <p style={{ color: COLORS.text }} className="text-[12.5px] mt-1.5 leading-relaxed">{c.descricao}</p>
@@ -3053,7 +3057,7 @@ function FechamentoDetalhe({ fechamento, api, recarregar, representante, user, r
               {fechamento.status === "aguardando_nota_fiscal" && podeFinanceiro && (
                 <div className="flex items-center gap-2">
                   <input value={numeroNF} onChange={(e) => setNumeroNF(e.target.value)} placeholder="Número da NF" style={{ borderColor: COLORS.border }} className="border rounded-lg px-3 py-2 text-[12.5px] outline-none w-[140px]" />
-                  <button disabled={!numeroNF} onClick={() => avancar("programado", { numeroNF })} style={{ background: numeroNF ? COLORS.primary : "#C7C8EE" }} className="text-white text-[12.5px] font-medium px-3.5 py-2 rounded-lg">Registrar nota fiscal</button>
+                  <button disabled={!numeroNF} onClick={() => avancar("programado", { numeroNF })} style={{ background: numeroNF ? COLORS.primary : "#ADC6E7" }} className="text-white text-[12.5px] font-medium px-3.5 py-2 rounded-lg">Registrar nota fiscal</button>
                 </div>
               )}
               {fechamento.status === "programado" && podeFinanceiro && (
@@ -3113,7 +3117,7 @@ function FechamentosView({ fechamentos, api, recarregar, representantes, user, r
 
   return (
     <div className="flex flex-col gap-4">
-      <div style={{ borderColor: COLORS.border, background: "#F6F6FB", color: COLORS.text }} className="border rounded-xl px-4 py-3 text-[12.5px]">
+      <div style={{ borderColor: COLORS.border, background: "#F4F5F7", color: COLORS.text }} className="border rounded-xl px-4 py-3 text-[12.5px]">
         Competência de referência: <strong>Agosto/2026</strong>. Cada card agrega as vendas elegíveis do representante no período e aplica a condição comercial vigente — o mesmo motor usado no simulador.
       </div>
 
@@ -3122,7 +3126,7 @@ function FechamentosView({ fechamentos, api, recarregar, representantes, user, r
           const rep = f.representante || representantes.find((r) => r.id === f.representanteId);
           const qtdElegiveis = (f.vendasNaCompetencia || []).filter((v) => v.elegivelComissao).length;
           return (
-            <button key={f.id} onClick={() => setAberto(f)} style={{ borderColor: COLORS.border, background: COLORS.surface }} className="text-left border rounded-xl p-4 hover:border-[#C7C8EE] transition-colors">
+            <button key={f.id} onClick={() => setAberto(f)} style={{ borderColor: COLORS.border, background: COLORS.surface }} className="text-left border rounded-xl p-4 hover:border-[#ADC6E7] transition-colors">
               <div className="flex items-start justify-between mb-2">
                 <div>
                   <div style={{ color: COLORS.text }} className="text-[14px] font-semibold">{rep?.nomeCompleto}</div>
@@ -3227,7 +3231,7 @@ const CAMPANHAS_INICIAIS = [
 function BarraProgresso({ pct }) {
   const cor = pct >= 100 ? COLORS.emerald : pct >= 80 ? COLORS.amber : COLORS.rose;
   return (
-    <div style={{ background: "#EEF0F4" }} className="h-1.5 rounded-full overflow-hidden">
+    <div style={{ background: "#F4F5F7" }} className="h-1.5 rounded-full overflow-hidden">
       <div style={{ width: `${Math.min(100, pct)}%`, background: cor }} className="h-full rounded-full" />
     </div>
   );
@@ -3239,7 +3243,7 @@ function NovaMetaModal({ representantes, competenciaPadrao, onClose, onCriar }) 
   const podeSalvar = dados.representanteId && dados.valorMeta;
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#141D2E]/40" onClick={onClose} />
       <div style={{ background: COLORS.surface }} className="relative w-full max-w-[420px] rounded-2xl shadow-2xl p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 style={{ color: COLORS.text }} className="text-[16px] font-semibold flex items-center gap-2"><Target size={17} /> Nova meta</h3>
@@ -3269,7 +3273,7 @@ function NovaMetaModal({ representantes, competenciaPadrao, onClose, onCriar }) 
           <button
             disabled={!podeSalvar}
             onClick={() => onCriar({ id: `meta_${Math.random().toString(36).slice(2, 8)}`, ...dados, valorMeta: Number(dados.valorMeta), valorRealizadoManual: null })}
-            style={{ background: podeSalvar ? COLORS.primary : "#C7C8EE" }}
+            style={{ background: podeSalvar ? COLORS.primary : "#ADC6E7" }}
             className="text-white text-[13px] font-medium px-4 py-2 rounded-lg"
           >
             Criar meta
@@ -3286,7 +3290,7 @@ function NovaCampanhaModal({ onClose, onCriar }) {
   const podeSalvar = dados.nome && dados.valor && dados.dataInicio;
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#141D2E]/40" onClick={onClose} />
       <div style={{ background: COLORS.surface }} className="relative w-full max-w-[420px] rounded-2xl shadow-2xl p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 style={{ color: COLORS.text }} className="text-[16px] font-semibold flex items-center gap-2"><Sparkles size={17} /> Nova campanha</h3>
@@ -3313,7 +3317,7 @@ function NovaCampanhaModal({ onClose, onCriar }) {
           <button
             disabled={!podeSalvar}
             onClick={() => onCriar({ id: `camp_${Math.random().toString(36).slice(2, 8)}`, ...dados, valor: Number(dados.valor), status: "ativa" })}
-            style={{ background: podeSalvar ? COLORS.primary : "#C7C8EE" }}
+            style={{ background: podeSalvar ? COLORS.primary : "#ADC6E7" }}
             className="text-white text-[13px] font-medium px-4 py-2 rounded-lg"
           >
             Criar campanha
@@ -3339,7 +3343,7 @@ function MetaCard({ meta, representante, vendas, lojas, podeEditar, onAtualizarR
           <div style={{ color: COLORS.text }} className="text-[13.5px] font-semibold">{tipo.label}</div>
           <div style={{ color: COLORS.muted }} className="text-[12px]">{representante?.nomeCompleto} · {meta.competencia}</div>
         </div>
-        <span style={{ background: pct >= 100 ? "#E7F6EF" : pct >= 80 ? "#FDF1DE" : "#FBE7EE", color: pct >= 100 ? COLORS.emerald : pct >= 80 ? COLORS.amber : COLORS.rose }} className="text-[11px] font-medium px-2 py-1 rounded-md shrink-0">
+        <span style={{ background: pct >= 100 ? "#E9F7EF" : pct >= 80 ? "#FEF3C7" : "#FDECEC", color: pct >= 100 ? COLORS.emerald : pct >= 80 ? COLORS.amber : COLORS.rose }} className="text-[11px] font-medium px-2 py-1 rounded-md shrink-0">
           {pct.toFixed(0)}%
         </span>
       </div>
@@ -3436,7 +3440,7 @@ function MetasCampanhasView({ metas, campanhas, api, recarregar, representantes,
               <div key={c.id} style={{ borderColor: COLORS.border, background: COLORS.surface }} className="border rounded-xl p-4">
                 <div className="flex items-start justify-between mb-1.5">
                   <div style={{ color: COLORS.text }} className="text-[13.5px] font-semibold">{c.nome}</div>
-                  <span style={{ background: c.status === "ativa" ? "#E7F6EF" : "#F1F1F1", color: c.status === "ativa" ? COLORS.emerald : COLORS.muted }} className="text-[11px] font-medium px-2 py-1 rounded-md">{c.status === "ativa" ? "Ativa" : "Encerrada"}</span>
+                  <span style={{ background: c.status === "ativa" ? "#E9F7EF" : "#F4F5F7", color: c.status === "ativa" ? COLORS.emerald : COLORS.muted }} className="text-[11px] font-medium px-2 py-1 rounded-md">{c.status === "ativa" ? "Ativa" : "Encerrada"}</span>
                 </div>
                 <p style={{ color: COLORS.muted }} className="text-[12.5px] leading-relaxed mb-2.5">{c.descricao}</p>
                 <div className="flex items-center justify-between text-[12px]">
@@ -3504,7 +3508,7 @@ function ComissoesView({ fechamentos, representantes, user }) {
         </select>
       </div>
 
-      <div style={{ borderColor: COLORS.border, background: COLORS.surface }} className="border rounded-xl overflow-hidden">
+      <div style={{ borderColor: COLORS.border, background: COLORS.surface }} className="border rounded-xl overflow-x-auto">
         <table className="w-full text-[13px]">
           <thead>
             <tr style={{ borderColor: COLORS.border, color: COLORS.muted }} className="border-b text-left">
@@ -3566,7 +3570,7 @@ function AprovacoesView({ condicoes, fechamentos, api, recarregar, representante
           <h3 style={{ color: COLORS.text }} className="text-[13.5px] font-semibold mb-2.5 flex items-center gap-1.5"><FileSliders size={15} /> Condições comerciais ({condicoesPendentes.length})</h3>
           <div className="grid md:grid-cols-2 gap-3">
             {condicoesPendentes.map((c) => (
-              <button key={c.id} onClick={() => setCondicaoAberta(c)} style={{ borderColor: COLORS.border, background: COLORS.surface }} className="text-left border rounded-xl p-3.5 hover:border-[#C7C8EE]">
+              <button key={c.id} onClick={() => setCondicaoAberta(c)} style={{ borderColor: COLORS.border, background: COLORS.surface }} className="text-left border rounded-xl p-3.5 hover:border-[#ADC6E7]">
                 <div style={{ color: COLORS.text }} className="text-[13.5px] font-medium">{c.nome}</div>
                 <div style={{ color: COLORS.muted }} className="text-[12px] mt-0.5">Solicitado por {c.responsavelCriacao} · {c.elegibilidade}</div>
               </button>
@@ -3581,7 +3585,7 @@ function AprovacoesView({ condicoes, fechamentos, api, recarregar, representante
             {fechamentosPendentes.map((f) => {
               const rep = representantes.find((r) => r.id === f.representanteId);
               return (
-                <button key={f.id} onClick={() => setFechamentoAberto(f)} style={{ borderColor: COLORS.border, background: COLORS.surface }} className="text-left border rounded-xl p-3.5 hover:border-[#C7C8EE]">
+                <button key={f.id} onClick={() => setFechamentoAberto(f)} style={{ borderColor: COLORS.border, background: COLORS.surface }} className="text-left border rounded-xl p-3.5 hover:border-[#ADC6E7]">
                   <div style={{ color: COLORS.text }} className="text-[13.5px] font-medium">{rep?.nomeCompleto}</div>
                   <div style={{ color: COLORS.muted }} className="text-[12px] mt-0.5">{f.competencia} · {f.contestacoes.length > 0 ? `${f.contestacoes.length} contestação(ões) analisada(s)` : "sem contestações"}</div>
                 </button>
@@ -3717,7 +3721,7 @@ function AuditoriaView({ logs }) {
         <Search size={14} style={{ color: COLORS.muted }} />
         <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Buscar por ação, entidade ou usuário" className="bg-transparent outline-none text-[13px] w-full" />
       </div>
-      <div style={{ borderColor: COLORS.border, background: COLORS.surface }} className="border rounded-xl overflow-hidden">
+      <div style={{ borderColor: COLORS.border, background: COLORS.surface }} className="border rounded-xl overflow-x-auto">
         <table className="w-full text-[13px]">
           <thead>
             <tr style={{ borderColor: COLORS.border, color: COLORS.muted }} className="border-b text-left">
@@ -3767,7 +3771,7 @@ function NovoUsuarioModal({ representantes, onClose, onCriar }) {
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#141D2E]/40" onClick={onClose} />
       <div style={{ background: COLORS.surface }} className="relative w-full max-w-[400px] rounded-2xl shadow-2xl p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 style={{ color: COLORS.text }} className="text-[16px] font-semibold flex items-center gap-2"><UserPlus size={17} /> Novo usuário</h3>
@@ -3792,7 +3796,7 @@ function NovoUsuarioModal({ representantes, onClose, onCriar }) {
           <button
             disabled={!podeSalvar}
             onClick={() => onCriar({ id: `u_${Math.random().toString(36).slice(2, 8)}`, nome: dados.nome, cargo: dados.cargo, perfil: dados.perfil, ...(dados.perfil === "representante" ? { representanteId: dados.representanteId } : {}) })}
-            style={{ background: podeSalvar ? COLORS.primary : "#C7C8EE" }}
+            style={{ background: podeSalvar ? COLORS.primary : "#ADC6E7" }}
             className="text-white text-[13px] font-medium px-4 py-2 rounded-lg"
           >
             Cadastrar usuário
@@ -3853,7 +3857,7 @@ function ConfiguracoesView({ usuarios, parametros, api, recarregar, representant
                   <tr key={u.id} style={{ borderColor: COLORS.border }} className="border-b last:border-0">
                     <td className="px-4 py-3" style={{ color: COLORS.text }}>{u.nome}</td>
                     <td className="px-4 py-3" style={{ color: COLORS.text }}>{u.cargo}</td>
-                    <td className="px-4 py-3"><span style={{ background: "#EEEEFB", color: COLORS.primaryDeep }} className="text-[11.5px] font-medium px-2 py-1 rounded-md">{PERFIL_LABEL[u.perfil]}</span></td>
+                    <td className="px-4 py-3"><span style={{ background: "#E7EEFB", color: COLORS.primaryDeep }} className="text-[11.5px] font-medium px-2 py-1 rounded-md">{PERFIL_LABEL[u.perfil]}</span></td>
                   </tr>
                 ))}
               </tbody>
@@ -3903,7 +3907,7 @@ function ConfiguracoesView({ usuarios, parametros, api, recarregar, representant
 function EmConstrucaoView({ titulo }) {
   return (
     <div style={{ borderColor: COLORS.border, background: COLORS.surface }} className="border rounded-xl flex flex-col items-center justify-center py-24 text-center">
-      <div style={{ background: "#EEEEFB", color: COLORS.primaryDeep }} className="h-11 w-11 rounded-full flex items-center justify-center mb-4">
+      <div style={{ background: "#E7EEFB", color: COLORS.primaryDeep }} className="h-11 w-11 rounded-full flex items-center justify-center mb-4">
         <Lock size={18} />
       </div>
       <h3 style={{ color: COLORS.text }} className="text-[15px] font-semibold mb-1">{titulo} — próximo módulo</h3>
@@ -4066,7 +4070,7 @@ export default function App() {
   return (
     <div style={{ background: COLORS.bg }} className="min-h-screen w-full flex font-sans" >
       <style>{`
-        .font-sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, sans-serif; }
+        .font-sans { font-family: Inter, Arial, sans-serif; }
         * { box-sizing: border-box; }
         table { font-variant-numeric: tabular-nums; }
       `}</style>
@@ -4078,7 +4082,7 @@ export default function App() {
           onAbrirRepresentante={(r) => setSelecionado(r)}
           onAbrirLoja={handleAbrirLojaNaBusca}
         />
-        <main className="p-6 flex-1 min-w-0">
+        <main className="p-3 sm:p-6 flex-1 min-w-0">
           {current === "dashboard_comercial" && <DashboardComercial apiBase={API_BASE_URL} token={user.token} usuario={user} />}
           {current === "visao_geral" && <VisaoGeralView representantes={repsVisiveis} lojas={lojasVisiveis} user={user} />}
           {current === "representantes" && user.perfil !== "representante" && (

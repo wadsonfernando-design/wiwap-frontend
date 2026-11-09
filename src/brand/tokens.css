@@ -1,0 +1,18 @@
+/* Identidade oficial Wiwap — fonte: "Wiwap — Marca & Design System" (v0.2). Não inventar cores fora desta lista. */
+:root {
+  --wiwap-navy: #003060;          /* primária; foco e ação */
+  --wiwap-teal: #009FA1;          /* secundária/acento — nunca em texto corrido */
+  --wiwap-teal-texto: #007A7C;    /* teal para texto de acento */
+  --wiwap-ink: #141D2E;           /* neutro escuro */
+  --wiwap-primary-50: #E7EEFB;  --wiwap-primary-100: #D6E4F5; --wiwap-primary-200: #ADC6E7; --wiwap-primary-300: #7BA0CF;
+  --wiwap-primary-400: #4B77AE; --wiwap-primary-500: #2A5B8E; --wiwap-primary-600: #17497D; --wiwap-primary-700: #0A3A6B;
+  --wiwap-primary-800: #003060; --wiwap-primary-900: #00223F; --wiwap-primary-950: #001B33;
+  --wiwap-bg-pagina: #FCFCFC; --wiwap-bg-elevado: #FFFFFF; --wiwap-bg-rebaixado: #F4F5F7; --wiwap-bg-teal: #E6F6F6;
+  --wiwap-texto: #1F2733; --wiwap-texto-2: #5B6472; --wiwap-texto-3: #69707D; --wiwap-texto-off: #B4BAC4;
+  --wiwap-borda: #DADADA; --wiwap-borda-campo: #8A919C; --wiwap-divisoria: #ECEEF1;
+  --wiwap-ok: #16A34A; --wiwap-ok-texto: #15803D; --wiwap-ok-bg: #E9F7EF;
+  --wiwap-alerta: #E8730A; --wiwap-alerta-texto: #B45309; --wiwap-alerta-bg: #FEF3C7;
+  --wiwap-erro: #DC2626; --wiwap-erro-texto: #B91C1C; --wiwap-erro-bg: #FDECEC;
+  --wiwap-info: #2563EB; --wiwap-info-texto: #1D4ED8; --wiwap-info-bg: #E7EEFB;
+  --wiwap-dado-1: #5F8D7E; --wiwap-dado-2: #6E86AE; --wiwap-dado-3: #C4A06A;
+}

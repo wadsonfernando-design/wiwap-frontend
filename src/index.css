@@ -5,3 +5,16 @@
 html, body, #root {
   height: 100%;
 }
+
+body {
+  font-family: Inter, Arial, sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--wiwap-navy);
+  outline-offset: 2px;
+}
+
+aside :focus-visible {
+  outline-color: var(--wiwap-bg-elevado);
+}
