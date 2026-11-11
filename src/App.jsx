@@ -14,9 +14,6 @@ import {
   MessageSquareWarning, CircleCheck, Paperclip, RotateCcw, Download, History,
   UserPlus, SlidersHorizontal, ShieldQuestion,
 } from "lucide-react";
-import {
-  ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid,
-} from "recharts";
 
 /* ============================================================================
    CLIENTE DE API
@@ -771,20 +768,6 @@ function VisaoGeralView({ representantes, lojas, user }) {
 
   const ativos = meusDados.representantes.filter((r) => r.status === "ativo").length;
   const lojasAtivas = meusDados.lojas.filter((l) => l.status === "ativa").length;
-  const semVendas = meusDados.lojas.filter((l) => l.status === "ativa" && l.qtdVendas === 0).length;
-  const volumeTotal = meusDados.lojas.reduce((a, l) => a + l.volumeOriginado, 0);
-  const receitaTotal = meusDados.lojas.reduce((a, l) => a + l.receitaGerada, 0);
-  const comissaoProjetada = receitaTotal * 0.18;
-
-  const evolucao = [
-    { mes: "Abr", volume: Math.round(volumeTotal * 0.7) },
-    { mes: "Mai", volume: Math.round(volumeTotal * 0.8) },
-    { mes: "Jun", volume: Math.round(volumeTotal * 0.85) },
-    { mes: "Jul", volume: Math.round(volumeTotal * 0.92) },
-    { mes: "Ago", volume: Math.round(volumeTotal * 0.97) },
-    { mes: "Set", volume: volumeTotal },
-  ];
-
   const ranking = [...representantes]
     .map((r) => {
       const ls = lojas.filter((l) => l.representanteAtualId === r.id);
@@ -795,10 +778,10 @@ function VisaoGeralView({ representantes, lojas, user }) {
   return (
     <div className="flex flex-col gap-6">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <KpiCard label={isRep ? "Minhas lojas ativas" : "Representantes ativos"} value={isRep ? lojasAtivas : ativos} icon={isRep ? Store : Users} delta="+2 vs. mês anterior" />
-        <KpiCard label="Lojas ativas" value={lojasAtivas} icon={Store} delta={`${semVendas} sem vendas`} deltaGood={semVendas === 0} />
-        <KpiCard label="Volume originado" value={fmtBRL(volumeTotal)} icon={TrendingUp} delta="+8,4% no período" />
-        <KpiCard label="Comissão projetada" value={fmtBRL(comissaoProjetada)} icon={Wallet} delta="Competência atual" />
+        <KpiCard label={isRep ? "Minhas lojas ativas" : "Representantes ativos"} value={isRep ? lojasAtivas : ativos} icon={isRep ? Store : Users} />
+        {!isRep && <KpiCard label="Lojas ativas" value={lojasAtivas} icon={Store} />}
+        <KpiCard label="Volume originado" value="Importação pendente" icon={TrendingUp} />
+        <KpiCard label="Comissão projetada" value="Apuração pendente" icon={Wallet} />
       </div>
 
       <div className="grid lg:grid-cols-[1.4fr_1fr] gap-4">
@@ -807,17 +790,9 @@ function VisaoGeralView({ representantes, lojas, user }) {
             <h3 style={{ color: COLORS.text }} className="text-[14px] font-semibold">Evolução do volume originado</h3>
             <span style={{ color: COLORS.muted }} className="text-[12px]">Últimos 6 meses</span>
           </div>
-          <div style={{ height: 220 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={evolucao} barCategoryGap="30%">
-                <CartesianGrid vertical={false} stroke={COLORS.border} />
-                <XAxis dataKey="mes" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: COLORS.muted }} />
-                <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: COLORS.muted }} tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} width={40} />
-                <Tooltip formatter={(v) => fmtBRL(v)} contentStyle={{ borderRadius: 10, border: `1px solid ${COLORS.border}`, fontSize: 12.5 }} />
-                <Bar dataKey="volume" radius={[6, 6, 0, 0]} fill={COLORS.primary} maxBarSize={42} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+          <p style={{ color: COLORS.muted }} className="text-[13px]">
+            Importação pendente. Consulte o Dashboard comercial para acompanhar a disponibilidade dos dados.
+          </p>
         </div>
 
         {!isRep && (
